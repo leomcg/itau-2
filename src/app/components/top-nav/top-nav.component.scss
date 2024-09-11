@@ -1,0 +1,22 @@
+.top-nav {
+  background-color: #ffe0cc;
+  border-bottom: 3px solid #ff7b24;
+  padding: 0 50px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+  .language {
+    border-right: 2px solid #000;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
