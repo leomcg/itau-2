@@ -1,6 +1,7 @@
+@import "../../../styles/variables";
 .title-container {
   margin-top: 3.5rem;
-  margin-left: 10rem;
+  margin-left: $default-padding;
   .title {
     font-size: 3rem;
     font-weight: 700;
@@ -11,4 +12,17 @@
     font-weight: 100;
     margin: 0;
   }
+}
+
+.table-container {
+  margin: $default-padding;
+  margin-top: 3.5rem;
+}
+
+.branch-name {
+  font-weight: bold;
+}
+
+.column-header {
+  font-weight: 100;
 }

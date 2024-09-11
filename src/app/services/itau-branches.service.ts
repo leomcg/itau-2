@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import BranchDetails from '../models/branch-details.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,12 @@ export class ItauBranchesService {
   constructor(private http: HttpClient) {}
 
   // Get all branches
-  getBranches(): Observable<any> {
+  getBranches(): Observable<BranchDetails[]> {
     return this.http.get<any>(this.apiUrl);
   }
 
   // Get a single branch by ID
-  getBranch(id: number): Observable<any> {
+  getBranch(id: number): Observable<BranchDetails> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 

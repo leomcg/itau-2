@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ItauBranchesService } from 'src/app/itau-branches.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import BranchDetails from 'src/app/models/branch-details.model';
+import { ItauBranchesService } from 'src/app/services/itau-branches.service';
 
 @Component({
   selector: 'app-listing',
@@ -7,14 +10,23 @@ import { ItauBranchesService } from 'src/app/itau-branches.service';
   styleUrls: ['./listing.component.scss'],
 })
 export class ListingComponent implements OnInit {
-  branches: any;
+  displayedColumns: string[] = [
+    'name',
+    'business',
+    'valuation',
+    'active',
+    'action',
+  ];
+  dataSource = new MatTableDataSource<BranchDetails>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // Use the non-null assertion operator
 
   constructor(private itauBranchesService: ItauBranchesService) {}
 
-  ngOnInit(): void {
-    this.itauBranchesService.getBranches().subscribe((response) => {
-      this.branches = response;
-      console.log(this.branches);
+  ngOnInit() {
+    this.itauBranchesService.getBranches().subscribe((branches) => {
+      this.dataSource.data = branches;
+      this.dataSource.paginator = this.paginator;
     });
   }
 }
