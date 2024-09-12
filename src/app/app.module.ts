@@ -4,6 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
+//enable pt-BR locale for i18n
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+registerLocaleData(localePt, 'pt-BR');
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Import Angular Animations
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,7 +42,7 @@ import { TopNavComponent } from './components/top-nav/top-nav.component';
     MatPaginatorModule,
   ],
   exports: [MatButtonModule, MatButtonModule, MatDividerModule, MatIconModule],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
