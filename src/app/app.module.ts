@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DummyInterceptor } from './interceptors/dummy.interceptor';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 //enable pt-BR locale for i18n
 import { LOCALE_ID } from '@angular/core';
@@ -57,7 +56,6 @@ import { TitleComponent } from './components/title/title.component';
       useClass: DummyInterceptor,
       multi: true,
     },
-    provideNgxMask(),
   ],
   bootstrap: [AppComponent],
 })
