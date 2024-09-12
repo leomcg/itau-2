@@ -19,6 +19,7 @@ export class ListingComponent implements OnInit {
     'valuation',
     'active',
     'action',
+    'delete',
   ];
   dataSource = new MatTableDataSource<BranchDetails>();
 
@@ -42,5 +43,13 @@ export class ListingComponent implements OnInit {
 
   goToBranchDetails(id: number) {
     this.router.navigate(['/details'], { queryParams: { id } });
+  }
+
+  createNewBranch() {
+    this.router.navigate(['/details']);
+  }
+
+  deleteBranch(name: string, id: number) {
+    this.itauBranchesService.deleteBranch(name, id);
   }
 }

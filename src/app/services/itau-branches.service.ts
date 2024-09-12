@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import BranchDetails from '../models/branch-details.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import BranchDetails from '../models/branch-details.model';
 export class ItauBranchesService {
   apiUrl = 'https://antlia-mockapi.azurewebsites.net/api/v1/itau_teste';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   getBranches(): Observable<BranchDetails[]> {
     return this.http.get<any>(this.apiUrl);
@@ -27,7 +28,9 @@ export class ItauBranchesService {
     return this.http.put<any>(`${this.apiUrl}/${id}`, branch);
   }
 
-  deleteBranch(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  deleteBranch(name: string, id: number): void {
+    this.snackBar.open(`Branch ${name}#${id} deleted!`, 'OK', {
+      duration: 3000,
+    });
   }
 }

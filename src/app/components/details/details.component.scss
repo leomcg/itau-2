@@ -11,11 +11,12 @@ form {
 
 mat-form-field {
   margin-right: 2rem;
+  color: #000;
 }
 
-.mat-label {
-  font-size: 14px;
-  color: #2a2a2a;
+mat-label {
+  font-size: 16px !important;
+  color: #2a2a2a !important;
 }
 
 .street-name {
@@ -29,15 +30,6 @@ mat-form-field {
     color: #fff !important;
     background-color: #989898 !important;
     font-size: 16px;
-    padding: 2rem;
-  }
-
-  .save-button {
-    padding: 2rem;
-    width: 15rem;
-    background-color: #fa8341 !important;
-    margin-left: 2rem;
-    color: #fff !important;
-    font-size: 16px;
+    padding: 2.2rem;
   }
 }

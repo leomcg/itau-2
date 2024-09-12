@@ -30,3 +30,13 @@
 .action {
   cursor: pointer;
 }
+
+.new-button {
+  margin-left: $default-padding;
+  margin-top: -2rem;
+}
+
+.delete {
+  color: tomato;
+  font-weight: bold;
+}

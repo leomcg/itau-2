@@ -16,11 +16,11 @@ export class DetailsComponent implements OnInit {
     id: 0,
     name: '',
     business: '',
-    valuation: 0,
+    valuation: null,
     active: '',
     action: '',
-    cep: 0,
-    cnpj: 0,
+    cep: null,
+    cnpj: null,
   };
 
   title = '';
@@ -43,15 +43,25 @@ export class DetailsComponent implements OnInit {
   getBranchDetails() {
     this.route.queryParams.subscribe((params) => {
       const id = params['id'];
-      this.itauBranchesService.getBranch(id).subscribe((branch) => {
-        this.branchDetails = branch;
-        this.setTitle();
-        this.initializeForm(this.branchDetails);
-      });
+      if (id) {
+        this.itauBranchesService.getBranch(id).subscribe((branch) => {
+          this.branchDetails = branch;
+          this.setTitle();
+          this.initializeForm(this.branchDetails);
+        });
+      } else {
+        this.setTitle(true);
+        this.initializeForm();
+      }
     });
   }
 
-  setTitle() {
+  setTitle(newBranch = false) {
+    if (newBranch) {
+      this.title = 'Novo Polo';
+      this.subtitle = 'Preencha os campos abaixo para criar um novo polo';
+      return;
+    }
     this.title = `Polo ${this.branchDetails.name}`;
     this.subtitle = `Exibindo detalhes do polo ${this.branchDetails.business}#${this.branchDetails.id}`;
   }

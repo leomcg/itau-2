@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./styles/variables";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 html,
 body {
@@ -10,4 +11,12 @@ body {
 body {
   margin: 0;
 }
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.standard-button {
+  padding: 2.2rem !important;
+  width: 15rem;
+  background-color: #fa8341 !important;
+  margin-left: 2rem;
+  color: #fff !important;
+  font-size: 16px;
+}

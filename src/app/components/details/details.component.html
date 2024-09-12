@@ -8,7 +8,7 @@
   <div>
     <mat-form-field appearance="outline">
       <mat-label>CEP</mat-label>
-      <input matInput formControlName="cep">
+      <input mask="00000-000" matInput formControlName="cep">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="street-name">
@@ -74,6 +74,6 @@
 
   <div class="buttons">
     <button mat-raised-button class="back-button" (click)="goBack()">Voltar</button>
-    <button mat-raised-button class="save-button" type="submit">Salvar</button>
+    <button mat-raised-button class="standard-button" type="submit">Salvar</button>
   </div>
 </form>
