@@ -1,1 +1,65 @@
-<p>details works!</p>
+<app-top-nav></app-top-nav>
+
+<app-title [title]="title" [subtitle]="subtitle"></app-title>
+
+<form *ngIf="branchDetailsForm" [formGroup]="branchDetailsForm" (ngSubmit)="onSubmit()">
+
+  <span>Detalhes do Endereço</span>
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Cep</mat-label>
+      <input matInput formControlName="cep">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nome da Rua</mat-label>
+      <input matInput formControlName="street">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Bairro</mat-label>
+      <input matInput formControlName="neighborhood">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cidade</mat-label>
+      <input matInput formControlName="city">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <input matInput formControlName="state">
+    </mat-form-field>
+  </div>
+
+  <span>Detalhes da Empresa</span>
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Business</mat-label>
+      <input matInput formControlName="business">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Valuation</mat-label>
+      <input matInput formControlName="valuation">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CNPJ</mat-label>
+      <input matInput mask="00.000.000/0000-00" formControlName="cnpj">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ativo?</mat-label>
+      <input matInput formControlName="active">
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button color="secondary" type="submit">Voltar</button>
+  <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>

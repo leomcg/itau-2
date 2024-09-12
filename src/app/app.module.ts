@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DummyInterceptor } from './interceptors/dummy.interceptor';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 //enable pt-BR locale for i18n
 import { LOCALE_ID } from '@angular/core';
@@ -16,11 +18,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { ListingComponent } from './components/listing/listing.component';
 import { DetailsComponent } from './components/details/details.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
+import { TitleComponent } from './components/title/title.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +33,7 @@ import { TopNavComponent } from './components/top-nav/top-nav.component';
     ListingComponent,
     DetailsComponent,
     TopNavComponent,
+    TitleComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +46,19 @@ import { TopNavComponent } from './components/top-nav/top-nav.component';
     MatDividerModule,
     MatTableModule,
     MatPaginatorModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
-  exports: [MatButtonModule, MatButtonModule, MatDividerModule, MatIconModule],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
+  exports: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: DummyInterceptor,
+      multi: true,
+    },
+    provideNgxMask(),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
