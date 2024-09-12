@@ -1,0 +1,43 @@
+@import "../../../styles/variables";
+
+form {
+  margin: $default-padding;
+}
+
+.form-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+mat-form-field {
+  margin-right: 2rem;
+}
+
+.mat-label {
+  font-size: 14px;
+  color: #2a2a2a;
+}
+
+.street-name {
+  width: 60rem;
+}
+
+.buttons {
+  margin-top: 3rem;
+
+  .back-button {
+    color: #fff !important;
+    background-color: #989898 !important;
+    font-size: 16px;
+    padding: 2rem;
+  }
+
+  .save-button {
+    padding: 2rem;
+    width: 15rem;
+    background-color: #fa8341 !important;
+    margin-left: 2rem;
+    color: #fff !important;
+    font-size: 16px;
+  }
+}

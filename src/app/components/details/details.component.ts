@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import BranchDetails from 'src/app/models/branch-details.model';
 import { ItauBranchesService } from 'src/app/services/itau-branches.service';
@@ -29,7 +31,9 @@ export class DetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private itauBranchesService: ItauBranchesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -52,55 +56,37 @@ export class DetailsComponent implements OnInit {
     this.subtitle = `Exibindo detalhes do polo ${this.branchDetails.business}#${this.branchDetails.id}`;
   }
 
-  // formatCNPJ(cnpj: string): string {
-  //   cnpj = cnpj.toString().replace(/\D/g, '');
-  //   return cnpj.replace(
-  //     /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
-  //     '$1.$2.$3/$4-$5'
-  //   );
-  // }
-
-  // formatCurrency(data: any): BranchDetails {
-  //   const formatter = new Intl.NumberFormat('pt-BR', {
-  //     style: 'currency',
-  //     currency: 'BRL',
-  //   });
-
-  //   return {
-  //     ...data,
-  //     valuation: formatter.format(Number(data.valuation)),
-  //     cnpj: this.formatCNPJ(data.cnpj),
-  //   };
-  // }
-
   initializeForm(branchData: BranchDetails = this.branchDetails) {
     this.branchDetailsForm = this.fb.group({
-      cep: [branchData.cep, [Validators.required, Validators.maxLength(50)]],
-      street: ['', [Validators.required, Validators.maxLength(10)]],
-      neighborhood: ['', [Validators.required, Validators.maxLength(100)]],
-      city: ['', [Validators.required, Validators.maxLength(100)]],
-      state: ['', [Validators.required, Validators.maxLength(100)]],
-      name: [branchData.name, [Validators.required, Validators.maxLength(100)]],
-      business: [
-        branchData.business,
-        [Validators.required, Validators.maxLength(100)],
-      ],
-      valuation: [
-        branchData.valuation,
-        [Validators.required, Validators.maxLength(100)],
-      ],
-      cnpj: [branchData.cnpj, [Validators.required, Validators.maxLength(100)]],
-      active: [
-        branchData.active,
-        [Validators.required, Validators.maxLength(100)],
-      ],
+      cep: [branchData.cep, [Validators.required]],
+      street: ['', [Validators.required]],
+      neighborhood: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      name: [branchData.name, [Validators.required]],
+      business: [branchData.business, [Validators.required]],
+      valuation: [branchData.valuation, [Validators.required]],
+      cnpj: [branchData.cnpj, [Validators.required]],
+      active: [branchData.active, [Validators.required]],
     });
   }
 
   onSubmit(): void {
     if (this.branchDetailsForm.valid) {
+      this.snackBar.open('Salvo com sucesso! Dados no console.', 'OK', {
+        duration: 3000,
+      });
       console.log(this.branchDetailsForm.value);
       return;
     }
+    this.snackBar.open(
+      'Por favor preencha todos os campos obrigatórios.',
+      'OK',
+      { duration: 3000 }
+    );
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
   }
 }

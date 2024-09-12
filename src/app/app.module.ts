@@ -4,6 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DummyInterceptor } from './interceptors/dummy.interceptor';
+import {
+  NgxMaskDirective,
+  NgxMaskPipe,
+  provideEnvironmentNgxMask,
+  provideNgxMask,
+} from 'ngx-mask';
 
 //enable pt-BR locale for i18n
 import { LOCALE_ID } from '@angular/core';
@@ -19,12 +25,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { ListingComponent } from './components/listing/listing.component';
 import { DetailsComponent } from './components/details/details.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { TitleComponent } from './components/title/title.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -47,6 +55,10 @@ import { TitleComponent } from './components/title/title.component';
     MatPaginatorModule,
     MatInputModule,
     MatFormFieldModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   exports: [],
   providers: [
@@ -56,6 +68,7 @@ import { TitleComponent } from './components/title/title.component';
       useClass: DummyInterceptor,
       multi: true,
     },
+    provideEnvironmentNgxMask(),
   ],
   bootstrap: [AppComponent],
 })

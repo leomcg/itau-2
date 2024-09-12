@@ -4,62 +4,76 @@
 
 <form *ngIf="branchDetailsForm" [formGroup]="branchDetailsForm" (ngSubmit)="onSubmit()">
 
-  <span>Detalhes do Endereço</span>
+  <p class="form-title">Detalhes do Endereço</p>
   <div>
     <mat-form-field appearance="outline">
-      <mat-label>Cep</mat-label>
+      <mat-label>CEP</mat-label>
       <input matInput formControlName="cep">
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="street-name">
       <mat-label>Nome da Rua</mat-label>
       <input matInput formControlName="street">
+      <mat-error *ngIf="branchDetailsForm.get('street')!.hasError('required')">Campo obrigatório</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Bairro</mat-label>
       <input matInput formControlName="neighborhood">
+      <mat-error *ngIf="branchDetailsForm.get('neighborhood')!.hasError('required')">Campo obrigatório</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Cidade</mat-label>
       <input matInput formControlName="city">
+      <mat-error *ngIf="branchDetailsForm.get('city')!.hasError('required')">Campo obrigatório</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Estado</mat-label>
       <input matInput formControlName="state">
+      <mat-error *ngIf="branchDetailsForm.get('state')!.hasError('required')">Campo obrigatório</mat-error>
     </mat-form-field>
   </div>
 
-  <span>Detalhes da Empresa</span>
+  <p class="form-title">Detalhes da Empresa"</p>
   <div>
     <mat-form-field appearance="outline">
       <mat-label>Nome</mat-label>
       <input matInput formControlName="name">
+      <mat-error *ngIf="branchDetailsForm.get('name')!.hasError('required')">Campo obrigatório</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Business</mat-label>
       <input matInput formControlName="business">
+      <mat-error *ngIf="branchDetailsForm.get('business')!.hasError('required')">Campo obrigatório</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Valuation</mat-label>
-      <input matInput formControlName="valuation">
+      <input matInput mask="separator.2" thousandSeparator="." decimalMarker="," prefix="R$ "
+        formControlName="valuation">
+      <mat-error *ngIf="branchDetailsForm.get('valuation')!.hasError('required')">Campo obrigatório</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>CNPJ</mat-label>
       <input matInput mask="00.000.000/0000-00" formControlName="cnpj">
+      <mat-error *ngIf="branchDetailsForm.get('cnpj')!.hasError('required')">Campo obrigatório</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Ativo?</mat-label>
-      <input matInput formControlName="active">
+      <mat-select formControlName="active">
+        <mat-option [value]="true">Sim</mat-option>
+        <mat-option [value]="false">Não</mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="secondary" type="submit">Voltar</button>
-  <button mat-raised-button color="primary" type="submit">Salvar</button>
+  <div class="buttons">
+    <button mat-raised-button class="back-button" (click)="goBack()">Voltar</button>
+    <button mat-raised-button class="save-button" type="submit">Salvar</button>
+  </div>
 </form>
