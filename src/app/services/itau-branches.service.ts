@@ -29,7 +29,7 @@ export class ItauBranchesService {
   }
 
   deleteBranch(name: string, id: number): void {
-    this.snackBar.open(`Branch ${name}#${id} deleted!`, 'OK', {
+    this.snackBar.open(`Polo ${name}#${id} excluído com sucesso!`, 'OK', {
       duration: 3000,
     });
   }

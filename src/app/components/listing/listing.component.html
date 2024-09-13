@@ -37,9 +37,11 @@
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef class="column-header"> Remover </th>
-      <td mat-cell *matCellDef="let element" class="action delete" (click)="deleteBranch(element.name, element.id)">
+      <td mat-cell *matCellDef="let element" class="action delete"
+        (click)="openConfirmDialog(confirmDialog, element.name, element.id)">
         <span>&#10005;
-        </span> </td>
+        </span>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -51,6 +53,16 @@
 
 <button mat-raised-button class="standard-button new-button" (click)="createNewBranch()">Novo Polo</button>
 
+<ng-template #confirmDialog>
+  <h1 mat-dialog-title>Confirmar exclusão:</h1>
+  <div mat-dialog-content>
+    <p>Tem certeza que deseja excluir este Polo?</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="dialogRef.close(false)">Cancelar</button>
+    <button mat-button (click)="dialogRef.close(true)">Sim</button>
+  </div>
+</ng-template>
 
 <ng-template #inactive>
   <div class="red circle"></div>
