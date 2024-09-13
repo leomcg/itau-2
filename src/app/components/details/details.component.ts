@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import BranchDetails from 'src/app/models/branch-details.model';
+import BranchDetails from '../../models/branch-details.model';
 import { ItauBranchesService } from 'src/app/services/itau-branches.service';
+import { DetailsService } from 'src/app/services/details.service';
 
 @Component({
   selector: 'app-details',
@@ -12,6 +13,8 @@ import { ItauBranchesService } from 'src/app/services/itau-branches.service';
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
+  update = false;
+
   branchDetails: BranchDetails = {
     id: 0,
     name: '',
@@ -32,7 +35,7 @@ export class DetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private itauBranchesService: ItauBranchesService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar,
+    private detailsService: DetailsService,
     private router: Router
   ) {}
 
@@ -44,6 +47,7 @@ export class DetailsComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const id = params['id'];
       if (id) {
+        this.update = true;
         this.itauBranchesService.getBranch(id).subscribe((branch) => {
           this.branchDetails = branch;
           this.setTitle();
@@ -68,6 +72,9 @@ export class DetailsComponent implements OnInit {
 
   initializeForm(branchData: BranchDetails = this.branchDetails) {
     this.branchDetailsForm = this.fb.group({
+      id: [
+        this.update ? branchData.id : this.detailsService.getRandomInt(7, 99),
+      ],
       cep: [branchData.cep, [Validators.required]],
       street: ['', [Validators.required]],
       neighborhood: ['', [Validators.required]],
@@ -82,18 +89,22 @@ export class DetailsComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const branch = this.branchDetailsForm.value;
     if (this.branchDetailsForm.valid) {
-      this.snackBar.open('Salvo com sucesso! Dados no console.', 'OK', {
-        duration: 3000,
-      });
+      if (this.update) {
+        this.detailsService.successMessage(
+          branch.name,
+          branch.id,
+          'atualizado'
+        );
+      } else {
+        this.detailsService.successMessage(branch.name, branch.id, 'criado');
+      }
       console.log(this.branchDetailsForm.value);
-      return;
+      this.goBack();
+    } else {
+      this.detailsService.errorMessage();
     }
-    this.snackBar.open(
-      'Por favor preencha todos os campos obrigatórios.',
-      'OK',
-      { duration: 3000 }
-    );
   }
 
   goBack() {
