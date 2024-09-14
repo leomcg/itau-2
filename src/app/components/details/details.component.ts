@@ -20,9 +20,8 @@ export class DetailsComponent implements OnInit {
     name: '',
     business: '',
     valuation: null,
-    active: '',
-    action: '',
-    cep: null,
+    active: true,
+    cep: '',
     cnpj: null,
   };
 
