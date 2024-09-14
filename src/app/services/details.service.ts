@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,22 +14,13 @@ export class DetailsService {
   }
 
   successMessage(name: string, id: string, action: string) {
-    this.snackBar.open(
-      `Polo ${name}#${id} ${action} com sucesso! Dados no console.`,
-      'OK',
-      {
-        duration: 4000,
-      }
-    );
+    this.snackBar.open(`Polo ${name}#${id} ${action} com sucesso!`, 'OK');
   }
 
   errorMessage() {
     this.snackBar.open(
       'Por favor preencha todos os campos obrigatórios.',
-      'OK',
-      {
-        duration: 4000,
-      }
+      'OK'
     );
   }
 }

@@ -36,7 +36,8 @@ export class DetailsComponent implements OnInit {
     private itauBranchesService: ItauBranchesService,
     private fb: FormBuilder,
     private detailsService: DetailsService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -48,11 +49,16 @@ export class DetailsComponent implements OnInit {
       const id = params['id'];
       if (id) {
         this.update = true;
-        this.itauBranchesService.getBranch(id).subscribe((branch) => {
-          this.branchDetails = branch;
-          this.setTitle();
-          this.initializeForm(this.branchDetails);
-        });
+        this.itauBranchesService.getBranch(id).subscribe(
+          (branch) => {
+            this.branchDetails = branch;
+            this.setTitle();
+            this.initializeForm(this.branchDetails);
+          },
+          (error) => {
+            this.snackBar.open(error, 'OK');
+          }
+        );
       } else {
         this.setTitle(true);
         this.initializeForm();
@@ -89,18 +95,20 @@ export class DetailsComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Just a dummy api call since we are not persisting data
     const branch = this.branchDetailsForm.value;
     if (this.branchDetailsForm.valid) {
       if (this.update) {
+        this.itauBranchesService.updateBranch(branch);
         this.detailsService.successMessage(
           branch.name,
           branch.id,
           'atualizado'
         );
       } else {
+        this.itauBranchesService.createBranch(branch);
         this.detailsService.successMessage(branch.name, branch.id, 'criado');
       }
-      console.log(this.branchDetailsForm.value);
       this.goBack();
     } else {
       this.detailsService.errorMessage();

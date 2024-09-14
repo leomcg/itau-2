@@ -12,11 +12,18 @@ body {
   margin: 0;
 }
 
-.standard-button {
+.itau-button {
   padding: 2.2rem !important;
+  font-size: 16px;
+  color: #fff !important;
+}
+
+.standard-button {
   width: 15rem;
   background-color: #fa8341 !important;
   margin-left: 2rem;
-  color: #fff !important;
-  font-size: 16px;
+}
+
+.back-button {
+  background-color: #989898 !important;
 }

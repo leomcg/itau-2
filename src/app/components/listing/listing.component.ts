@@ -1,17 +1,30 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import BranchDetails from 'src/app/models/branch-details.model';
 import { ItauBranchesService } from 'src/app/services/itau-branches.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort, Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
   styleUrls: ['./listing.component.scss'],
 })
-export class ListingComponent implements OnInit {
+export class ListingComponent implements OnInit, OnDestroy, AfterViewInit {
+  private subscriptions: Subscription = new Subscription();
+
   title = 'Polos Itaú';
   subtitle = 'confira abaixo alguns dos principais polos do itaú';
   displayedColumns: string[] = [
@@ -24,25 +37,73 @@ export class ListingComponent implements OnInit {
   ];
   dataSource = new MatTableDataSource<BranchDetails>();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator; // Use the non-null assertion operator
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   dialogRef!: MatDialogRef<any>;
+  private changeDetectorRef!: ChangeDetectorRef;
 
   constructor(
     private itauBranchesService: ItauBranchesService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.getAllBranches();
+    this.subscribeToBranchUpdates();
+  }
+
+  ngAfterViewInit() {
+    this.enableSorting();
   }
 
   getAllBranches() {
-    this.itauBranchesService.getBranches().subscribe((branches) => {
-      this.dataSource.data = branches;
-      this.dataSource.paginator = this.paginator;
-    });
+    this.itauBranchesService.getBranches().subscribe(
+      (branches) => {
+        this.dataSource.data = branches;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      (error) => {
+        this.snackBar.open(error, 'OK');
+      }
+    );
+  }
+
+  subscribeToBranchUpdates() {
+    const branchCreatedSubscription =
+      this.itauBranchesService.branchCreated$.subscribe(
+        (newBranch: BranchDetails) => {
+          const branches = [...this.dataSource.data, newBranch]; //create deep copy to ensure immutability
+          this.dataSource.data = branches;
+        }
+      );
+
+    const branchUpdatedSubscription =
+      this.itauBranchesService.branchUpdated$.subscribe(
+        (updatedBranch: BranchDetails) => {
+          const index = this.dataSource.data.findIndex(
+            (branch) => branch.id === updatedBranch.id
+          );
+          const branches = [...this.dataSource.data]; //create deep copy to ensure immutability
+          branches[index] = updatedBranch;
+          this.dataSource.data = branches;
+        }
+      );
+
+    this.subscriptions.add(branchCreatedSubscription);
+    this.subscriptions.add(branchUpdatedSubscription);
+  }
+
+  enableSorting() {
+    const initialSortState: Sort = { active: 'name', direction: 'asc' };
+    this.sort.active = initialSortState.active;
+    this.sort.direction = initialSortState.direction;
+    this.sort.sortChange.emit(initialSortState);
+    this.cdr.detectChanges();
   }
 
   goToBranchDetails(id: number) {
@@ -68,10 +129,13 @@ export class ListingComponent implements OnInit {
   }
 
   deleteBranch(name: string, id: number) {
-    // Just a dummy delete, the branch will not be deleted from the database since we are no persisting data
+    // Just a dummy api call since we are not persisting data
     this.itauBranchesService.deleteBranch(name, id);
-    this.dataSource.data = this.dataSource.data.filter(
-      (branch) => branch.id !== id
-    );
+    const branches = [...this.dataSource.data]; //create deep copy to ensure immutability
+    this.dataSource.data = branches.filter((branch) => branch.id !== id);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

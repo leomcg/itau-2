@@ -26,7 +26,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarModule,
+} from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -35,6 +38,7 @@ import { ListingComponent } from './components/listing/listing.component';
 import { DetailsComponent } from './components/details/details.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { TitleComponent } from './components/title/title.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -60,6 +64,7 @@ import { TitleComponent } from './components/title/title.component';
     MatSelectModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatSortModule,
     NgxMaskDirective,
     NgxMaskPipe,
   ],
@@ -72,6 +77,7 @@ import { TitleComponent } from './components/title/title.component';
       multi: true,
     },
     provideEnvironmentNgxMask(),
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
   ],
   bootstrap: [AppComponent],
 })
