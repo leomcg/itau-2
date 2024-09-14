@@ -20,7 +20,7 @@ export class DetailsComponent implements OnInit {
     name: '',
     business: '',
     valuation: null,
-    active: true,
+    active: null,
     cep: '',
     cnpj: null,
   };
@@ -68,11 +68,11 @@ export class DetailsComponent implements OnInit {
   setTitle(newBranch = false) {
     if (newBranch) {
       this.title = 'Novo Polo';
-      this.subtitle = 'Preencha os campos abaixo para criar um novo polo';
+      this.subtitle = 'preencha os campos abaixo para criar um novo polo';
       return;
     }
     this.title = `Polo ${this.branchDetails.name}`;
-    this.subtitle = `Exibindo detalhes do polo ${this.branchDetails.business}#${this.branchDetails.id}`;
+    this.subtitle = `exibindo detalhes do polo ${this.branchDetails.business}#${this.branchDetails.id}`;
   }
 
   initializeForm(branchData: BranchDetails = this.branchDetails) {

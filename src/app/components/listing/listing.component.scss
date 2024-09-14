@@ -1,5 +1,17 @@
 @import "../../../styles/variables";
 
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  margin-right: $default-padding;
+  margin-bottom: 4rem;
+  .search {
+    margin-top: 3.5rem;
+    width: 40rem !important;
+    height: 1rem !important;
+  }
+}
+
 .table-container {
   margin: $default-padding;
   margin-top: 3.5rem;
@@ -33,7 +45,7 @@
 
 .new-button {
   margin-left: $default-padding;
-  margin-top: -2rem;
+  margin-top: -25rem;
 }
 
 .cancel-button {

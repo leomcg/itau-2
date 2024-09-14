@@ -28,25 +28,19 @@ export class ItauBranchesService {
       .pipe(catchError(this.handleError));
   }
 
-  createBranch(branchData: BranchDetails): void {
-    /*
-     * Precisei usar esse Timeout como solução temporária porque o DetailsComponent sempre recebia os dados cedo demais e a UI não atualizava.
-     * Tentei resolver com Operator Delay (RxJS), changeDetectorRef, renderRows(do proprio MatTable), ReplaySubject mas nada funcionou.
-     * Infelizmente não consegui resolver a tempo. =(
-     */
+  /*
+   * Precisei usar esses Timeout como solução temporária porque o DetailsComponent sempre recebia os dados cedo demais e a UI não atualizava.
+   * Tentei resolver com Delay (RxJS operator), changeDetectorRef, renderRows(do proprio MatTable), ReplaySubject mas nada funcionou.
+   * Infelizmente não consegui resolver a tempo. =(
+   */
 
+  createBranch(branchData: BranchDetails): void {
     setTimeout(() => {
       this.branchCreatedSubject.next(branchData);
     }, 1000);
   }
 
   updateBranch(branchData: any): void {
-    /*
-     * Precisei usar esse Timeout como solução temporária porque o DetailsComponent sempre recebia os dados cedo demais e a UI não atualizava.
-     * Tentei resolver com Operator Delay (RxJS), changeDetectorRef, renderRows(do proprio MatTable), ReplaySubject mas nada funcionou.
-     * Infelizmente não consegui resolver a tempo. =(
-     */
-
     setTimeout(() => {
       this.branchUpdatedSubject.next(branchData);
     }, 1000);

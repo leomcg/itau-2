@@ -1,7 +1,8 @@
 @import "../../../styles/variables";
 
 form {
-  margin: $default-padding;
+  margin-right: $default-padding;
+  margin-left: $default-padding;
 }
 
 .form-title {

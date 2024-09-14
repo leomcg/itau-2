@@ -135,6 +135,11 @@ export class ListingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.data = branches.filter((branch) => branch.id !== id);
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value ?? '';
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

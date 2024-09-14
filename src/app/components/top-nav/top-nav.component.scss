@@ -1,7 +1,9 @@
+@import "../../../styles/variables.scss";
 .top-nav {
   background-color: #ffe0cc;
   border-bottom: 0.3rem solid #ff7b24;
-  padding: 0 10rem;
+  padding-right: $default-padding;
+  padding-left: $default-padding;
   height: 12rem;
   display: flex;
   align-items: center;
@@ -17,12 +19,14 @@
   .language {
     flex: 1;
     text-align: center;
+    font-weight: 700;
+    font-size: 2rem;
   }
   .divider {
     width: 0.1rem;
     height: 100%;
     background-color: #000;
-    margin: 0 1.5rem;
+    margin: 0 2.5rem;
   }
   .user {
     display: flex;

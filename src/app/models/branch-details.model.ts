@@ -3,7 +3,7 @@ export default interface BranchDetails {
   name: string;
   business: string;
   valuation: number | null;
-  active: boolean;
+  active: boolean | null;
   cep: string;
   cnpj: number | null;
 }

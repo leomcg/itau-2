@@ -1,5 +1,12 @@
 <app-top-nav></app-top-nav>
-<app-title [title]="title" [subtitle]="subtitle"></app-title>
+<div class="title-container">
+  <app-title [title]="title" [subtitle]="subtitle"></app-title>
+  <mat-form-field class="search" appearance="outline">
+    <mat-label>Pesquisar...</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+  </mat-form-field>
+</div>
+
 <div class="table-container mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
@@ -48,7 +55,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[4]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
 </div>
 
 <button mat-raised-button class="itau-button standard-button new-button" (click)="createNewBranch()">Novo Polo</button>
