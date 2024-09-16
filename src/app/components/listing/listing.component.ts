@@ -77,7 +77,7 @@ export class ListingComponent implements OnInit, OnDestroy, AfterViewInit {
     const branchCreatedSubscription =
       this.itauBranchesService.branchCreated$.subscribe(
         (newBranch: BranchDetails) => {
-          const branches = [...this.dataSource.data, newBranch]; //create deep copy to ensure immutability
+          const branches = [...this.dataSource.data, newBranch]; // criando uma deep copy para garantir imutabilidade
           this.dataSource.data = branches;
         }
       );
@@ -88,7 +88,7 @@ export class ListingComponent implements OnInit, OnDestroy, AfterViewInit {
           const index = this.dataSource.data.findIndex(
             (branch) => branch.id === updatedBranch.id
           );
-          const branches = [...this.dataSource.data]; //create deep copy to ensure immutability
+          const branches = [...this.dataSource.data]; // criando uma deep copy para garantir imutabilidade
           branches[index] = updatedBranch;
           this.dataSource.data = branches;
         }
@@ -129,9 +129,9 @@ export class ListingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   deleteBranch(name: string, id: number) {
-    // Just a dummy api call since we are not persisting data
+    // Apenas para atualizar a UI, os dados não serão salvos pois não estamos conectados a um backend
     this.itauBranchesService.deleteBranch(name, id);
-    const branches = [...this.dataSource.data]; //create deep copy to ensure immutability
+    const branches = [...this.dataSource.data]; // criando uma deep copy para garantir imutabilidade
     this.dataSource.data = branches.filter((branch) => branch.id !== id);
   }
 
