@@ -37,7 +37,7 @@ This project includes the following functionalities:
 - **Error Handling**: Error handling is implemented to provide user feedback and improve the user experience.
 - **Services**: Helper functions are encapsulated in services to keep components leaner and more maintainable.
 - **Angular Pipes**: Pipes are used along with internationalization to convert numbers to BRL currency format.
-- **Internationalization (i18n)**: i18n is implemented for the paginator texts as a showcase of internationalization capabilities.
+- **Internationalization (i18n)**: i18n is implemented for the paginator texts as a showcase of internationalization capabilities. **Click the language icon at the the top nav component to see it!**
 - **Reactive Forms**: Reactive forms are used in the entire project to provide better validation and a scalable, predictable, and testable approach to form management.
 - **RxJS**: Leveraged RxJS operators, subjects, and observables to showcase knowledge of the library and handle asynchronous operations and data flow effectively.
 - **Routing**: Implemented routing to navigate between different components and used query parameters to pass data around components.
