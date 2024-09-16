@@ -12,7 +12,6 @@ export class DetailsService {
   constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 
   getAddressByCEP(cep: string): Observable<any> {
-    console.log('chamou no service');
     const url = `${this.baseUrl}/${cep}/json/`;
     return this.http.get<any>(url);
   }

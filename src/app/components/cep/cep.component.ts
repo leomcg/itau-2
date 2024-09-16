@@ -7,7 +7,9 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { BranchAddress } from 'src/app/models/branch-details.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { DetailsService } from 'src/app/services/details.service';
 
 @Component({
@@ -15,47 +17,77 @@ import { DetailsService } from 'src/app/services/details.service';
   templateUrl: './cep.component.html',
   styleUrls: ['./cep.component.scss'],
 })
-export class CepComponent implements OnChanges {
+export class CepComponent {
   @Input() cep: string = '';
   @Output() addressFetched = new EventEmitter<any>();
-  address: BranchAddress = {
-    street: '',
-    neighborhood: '',
-    city: '',
-    state: '',
-  };
+  address: any;
+  cepForm: FormGroup;
 
-  constructor(private detailsService: DetailsService) {}
+  constructor(
+    private fb: FormBuilder,
+    private detailsService: DetailsService,
+    private snackBar: MatSnackBar
+  ) {
+    this.cepForm = this.fb.group({
+      cep: [
+        '',
+        [Validators.required, Validators.minLength(8), Validators.maxLength(8)],
+      ],
+    });
+  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['cep']) {
-      if (this.cep) {
-        this.fetchAddress(this.cep);
+  ngOnInit() {
+    if (this.cep) {
+      this.cepForm.get('cep')?.setValue(this.cep);
+      this.fetchAddress(this.cep);
+    }
+
+    this.cepForm
+      .get('cep')
+      ?.valueChanges.pipe(
+        debounceTime(1000), // Adjust the debounce time as needed
+        distinctUntilChanged()
+      )
+      .subscribe((value) => {
+        this.onCepChange(value);
+      });
+  }
+
+  onCepChange(cep: string) {
+    if (this.cepForm.valid) {
+      this.fetchAddress(cep);
+    } else {
+      this.address = null;
+      this.addressFetched.emit(null);
+      if (cep.length !== 8) {
+        this.snackBar.open('CEP inválido', 'OK', {
+          duration: 3000,
+        });
       }
     }
   }
 
-  onCepChange(event: KeyboardEvent) {
-    const cepInput = event.target as HTMLInputElement;
-    this.fetchAddress(cepInput.value);
-  }
-
   fetchAddress(cep: string) {
-    if (cep && cep.length === 9) {
-      console.log('chamou no componente');
-      this.detailsService.getAddressByCEP(cep).subscribe(
-        (data) => {
-          if (data.erro) {
-            console.error('CEP não encontrado');
-          } else {
-            this.address = data;
-            this.addressFetched.emit(this.address);
-          }
-        },
-        (error) => {
-          console.error('Erro ao buscar CEP:', error);
+    this.detailsService.getAddressByCEP(cep).subscribe(
+      (data) => {
+        if (data.erro) {
+          console.error('CEP inválido', data.erro);
+          this.address = null;
+          this.addressFetched.emit(null);
+          this.snackBar.open('CEP inválido', 'Close');
+        } else {
+          this.address = data;
+          this.addressFetched.emit(this.address);
         }
-      );
-    }
+      },
+      (error) => {
+        console.error('Ops! Ocorreu um erro: CEP não encontrado', error);
+        this.address = null;
+        this.addressFetched.emit(null);
+        this.snackBar.open('Ops! Ocorreu um erro: CEP não encontrado', 'OK', {
+          duration: 3000,
+        });
+      }
+    );
   }
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
+// Usei o i18n apenas para traduzir os textos do paginator, como exemplificação
 export class CustomMatPaginatorIntl extends MatPaginatorIntl {
   constructor(private translate: TranslateService) {
     super();

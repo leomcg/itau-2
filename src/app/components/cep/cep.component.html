@@ -1,10 +1,14 @@
-<mat-form-field appearance="outline">
-  <mat-label>CEP</mat-label>
-  <input cepInput matInput [(ngModel)]="cep" mask="00000-000" (keyup)="onCepChange($event)" placeholder="CEP" />
-  <mat-error *ngIf="!cep.length">
-    Campo obrigatório
-  </mat-error>
-  <mat-error *ngIf="cep.length != 9">
-    CEP inválido
-  </mat-error>
-</mat-form-field>
+<form [formGroup]="cepForm">
+  <mat-form-field appearance="outline">
+    <mat-label>CEP</mat-label>
+    <input matInput formControlName="cep" placeholder="Enter CEP" mask="00000-000" />
+    <mat-error
+      *ngIf="cepForm.get('cep')?.hasError('required') && (cepForm.get('cep')?.touched || cepForm.get('cep')?.dirty)">
+      Campo obrigatório
+    </mat-error>
+    <mat-error
+      *ngIf="(cepForm.get('cep')?.hasError('minlength') || cepForm.get('cep')?.hasError('maxlength')) && (cepForm.get('cep')?.touched || cepForm.get('cep')?.dirty)">
+      O CEP deve ter 8 dígitos
+    </mat-error>
+  </mat-form-field>
+</form>

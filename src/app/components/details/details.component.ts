@@ -99,12 +99,12 @@ export class DetailsComponent implements OnInit {
   }
 
   fillAdress($event: any) {
-    console.log('fillAdress', $event);
     this.branchDetailsForm.patchValue({
-      street: $event.logradouro,
-      neighborhood: $event.bairro,
-      city: $event.localidade,
-      state: $event.uf,
+      street: $event?.logradouro || '',
+      neighborhood: $event?.bairro || '',
+      city: $event?.localidade || '',
+      state: $event?.uf || '',
+      cep: $event?.cep || '',
     });
   }
 
