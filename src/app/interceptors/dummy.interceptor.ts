@@ -1,24 +1,33 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpResponse,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
-// Just a dummy interceptor to showcase its usage: it adds a custom header to all outgoing requests
-
+/*
+ * Apenas um interceptor de exemplo, não faz nada além de logar as requisições.
+ * Mas você poderia adicionar lógicas de autenticação, tratamento de erros, adicionar headers, etc.
+ * para todoas as requisições e respostas HTTP.
+ */
 @Injectable()
 export class DummyInterceptor implements HttpInterceptor {
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const clonedRequest = req.clone({
-      headers: req.headers.set('X-Dummy-Header', 'DummyHeaderValue'),
-    });
+    console.log('Request intercepted:', req);
 
-    return next.handle(clonedRequest);
+    return next.handle(req).pipe(
+      tap((event) => {
+        if (event instanceof HttpResponse) {
+          console.log('Response intercepted:', event);
+        }
+      })
+    );
   }
 }

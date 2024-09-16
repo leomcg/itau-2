@@ -109,7 +109,7 @@ export class DetailsComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Just a dummy api call since we are not persisting data
+    // Apenas simulando chamadas para atualizar a UI, os dados não serão salvos pois não estamos conectados a um backend
     const branch = this.branchDetailsForm.value;
     if (this.branchDetailsForm.valid) {
       if (this.update) {
