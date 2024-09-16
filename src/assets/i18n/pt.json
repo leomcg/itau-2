@@ -1,0 +1,12 @@
+{
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Itens por página",
+    "NEXT_PAGE": "Próxima página",
+    "PREVIOUS_PAGE": "Página anterior",
+    "FIRST_PAGE": "Primeira página",
+    "LAST_PAGE": "Última página",
+    "RANGE_LABEL": "de",
+    "TOTAL_RECORDS": "de um total de",
+    "ITEMS": "registros"
+  }
+}

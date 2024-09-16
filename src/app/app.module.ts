@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+  HttpClient,
+} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,11 +18,18 @@ import {
   provideEnvironmentNgxMask,
 } from 'ngx-mask';
 
-//enable pt-BR locale for i18n
-import { LOCALE_ID } from '@angular/core';
+//enable i18n
 import { registerLocaleData } from '@angular/common';
+import localeEn from '@angular/common/locales/en';
 import localePt from '@angular/common/locales/pt';
-registerLocaleData(localePt, 'pt-BR');
+import { LOCALE_ID } from '@angular/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+registerLocaleData(localeEn, 'en');
+registerLocaleData(localePt, 'pt');
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -72,6 +83,13 @@ import { CustomMatPaginatorIntl } from './components/custom-paginator-intl/custo
     MatSortModule,
     NgxMaskDirective,
     NgxMaskPipe,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   exports: [],
   providers: [

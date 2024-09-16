@@ -5,7 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'itau-2';
-  //function to reverse a string
-}
+export class AppComponent {}
