@@ -7,7 +7,8 @@
   margin-bottom: 4rem;
   .search {
     margin-top: 3.5rem;
-    width: 45rem !important;
+    width: 40rem !important;
+    height: 1rem !important;
   }
 }
 
@@ -21,7 +22,8 @@
 }
 
 .column-header {
-  font-weight: 100;
+  color: gray;
+  font-size: 1.3rem;
 }
 
 .circle {
@@ -54,4 +56,13 @@
 .delete {
   color: tomato;
   font-weight: bold;
+}
+
+.column-large {
+  width: 20rem !important;
+}
+
+.column-small {
+  width: 1rem !important;
+  text-align: center;
 }

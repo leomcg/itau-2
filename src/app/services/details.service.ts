@@ -1,11 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DetailsService {
-  constructor(private snackBar: MatSnackBar) {}
+  private baseUrl = 'https://viacep.com.br/ws';
+
+  constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
+
+  getAddressByCEP(cep: string): Observable<any> {
+    console.log('chamou no service');
+    const url = `${this.baseUrl}/${cep}/json/`;
+    return this.http.get<any>(url);
+  }
 
   getRandomInt(min: number, max: number): number {
     min = Math.ceil(min);

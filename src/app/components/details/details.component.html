@@ -6,10 +6,7 @@
 
   <p class="form-title">Detalhes do Endereço</p>
   <div>
-    <mat-form-field appearance="outline">
-      <mat-label>CEP</mat-label>
-      <input mask="00000-000" matInput formControlName="cep">
-    </mat-form-field>
+    <app-cep [cep]="branchForm.details.cep" (addressFetched)="fillAdress($event)"></app-cep>
 
     <mat-form-field appearance="outline" class="street-name">
       <mat-label>Nome da Rua</mat-label>

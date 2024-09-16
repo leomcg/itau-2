@@ -10,7 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import BranchDetails from 'src/app/models/branch-details.model';
+import { BranchDetails } from 'src/app/models/branch-details.model';
 import { ItauBranchesService } from 'src/app/services/itau-branches.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';

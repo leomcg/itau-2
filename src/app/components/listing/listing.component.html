@@ -11,23 +11,23 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef class="column-header" mat-sort-header> Nome </th>
+      <th mat-header-cell *matHeaderCellDef class="column-header column-large" mat-sort-header> Nome </th>
       <td mat-cell *matCellDef="let element" class="branch-name"> {{element.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="business">
-      <th mat-header-cell *matHeaderCellDef class="column-header"> Business </th>
+      <th mat-header-cell *matHeaderCellDef class="column-header column-large"> Business </th>
       <td mat-cell *matCellDef="let element"> {{element.business}} </td>
     </ng-container>
 
     <ng-container matColumnDef="valuation">
-      <th mat-header-cell *matHeaderCellDef class="column-header" mat-sort-header> Valuation </th>
+      <th mat-header-cell *matHeaderCellDef class="column-header column-large" mat-sort-header> Valuation </th>
       <td mat-cell *matCellDef="let element"> {{element.valuation | currency:'BRL':'symbol':'1.2-2':'pt-BR'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="active">
-      <th mat-header-cell *matHeaderCellDef class="column-header" mat-sort-header> Situação </th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef class="column-header column-small" mat-sort-header> Situação </th>
+      <td mat-cell *matCellDef="let element" class="column-small">
         <ng-container *ngIf="element.active; else inactive">
           <div class="green circle"></div>
         </ng-container>
@@ -35,19 +35,20 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef class="column-header"> Ação </th>
-      <td mat-cell *matCellDef="let element" class="action" (click)="goToBranchDetails(element.id)"> <span
+      <th mat-header-cell *matHeaderCellDef class="column-header column-small"> Ação </th>
+      <td mat-cell *matCellDef="let element" class="action column-small" (click)="goToBranchDetails(element.id)"> <span
           class="material-icons">
           visibility
         </span> </td>
     </ng-container>
 
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef class="column-header"> Remover </th>
-      <td mat-cell *matCellDef="let element" class="action delete"
+      <th mat-header-cell *matHeaderCellDef class="column-header column-small"> Remover </th>
+      <td mat-cell *matCellDef="let element" class="action delete column-small"
         (click)="openConfirmDialog(confirmDialog, element.name, element.id)">
-        <span>&#10005;
-        </span>
+        <div>
+          &#10005;
+        </div>
       </td>
     </ng-container>
 

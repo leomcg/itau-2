@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import BranchDetails from '../../models/branch-details.model';
+import { BranchForm } from '../../models/branch-details.model';
 import { ItauBranchesService } from 'src/app/services/itau-branches.service';
 import { DetailsService } from 'src/app/services/details.service';
 
@@ -15,14 +15,17 @@ import { DetailsService } from 'src/app/services/details.service';
 export class DetailsComponent implements OnInit {
   update = false;
 
-  branchDetails: BranchDetails = {
-    id: 0,
-    name: '',
-    business: '',
-    valuation: null,
-    active: null,
-    cep: '',
-    cnpj: null,
+  branchForm: BranchForm = {
+    details: {
+      id: 0,
+      name: '',
+      business: '',
+      valuation: null,
+      active: null,
+      cep: '',
+      cnpj: null,
+    },
+    address: { street: '', neighborhood: '', city: '', state: '' },
   };
 
   title = '';
@@ -50,9 +53,9 @@ export class DetailsComponent implements OnInit {
         this.update = true;
         this.itauBranchesService.getBranch(id).subscribe(
           (branch) => {
-            this.branchDetails = branch;
+            this.branchForm.details = branch;
             this.setTitle();
-            this.initializeForm(this.branchDetails);
+            this.initializeForm(this.branchForm);
           },
           (error) => {
             this.snackBar.open(error, 'OK');
@@ -71,25 +74,37 @@ export class DetailsComponent implements OnInit {
       this.subtitle = 'preencha os campos abaixo para criar um novo polo';
       return;
     }
-    this.title = `Polo ${this.branchDetails.name}`;
-    this.subtitle = `exibindo detalhes do polo ${this.branchDetails.business}#${this.branchDetails.id}`;
+    this.title = `Polo ${this.branchForm.details.name}`;
+    this.subtitle = `exibindo detalhes do polo ${this.branchForm.details.business}#${this.branchForm.details.id}`;
   }
 
-  initializeForm(branchData: BranchDetails = this.branchDetails) {
+  initializeForm(branchData: BranchForm = this.branchForm) {
     this.branchDetailsForm = this.fb.group({
       id: [
-        this.update ? branchData.id : this.detailsService.getRandomInt(7, 99),
+        this.update
+          ? branchData.details.id
+          : this.detailsService.getRandomInt(7, 99),
       ],
-      cep: [branchData.cep, [Validators.required]],
+      cep: [branchData.details.cep, [Validators.required]],
       street: ['', [Validators.required]],
       neighborhood: ['', [Validators.required]],
       city: ['', [Validators.required]],
       state: ['', [Validators.required]],
-      name: [branchData.name, [Validators.required]],
-      business: [branchData.business, [Validators.required]],
-      valuation: [branchData.valuation, [Validators.required]],
-      cnpj: [branchData.cnpj, [Validators.required]],
-      active: [branchData.active, [Validators.required]],
+      name: [branchData.details.name, [Validators.required]],
+      business: [branchData.details.business, [Validators.required]],
+      valuation: [branchData.details.valuation, [Validators.required]],
+      cnpj: [branchData.details.cnpj, [Validators.required]],
+      active: [branchData.details.active, [Validators.required]],
+    });
+  }
+
+  fillAdress($event: any) {
+    console.log('fillAdress', $event);
+    this.branchDetailsForm.patchValue({
+      street: $event.logradouro,
+      neighborhood: $event.bairro,
+      city: $event.localidade,
+      state: $event.uf,
     });
   }
 

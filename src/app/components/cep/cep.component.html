@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline">
+  <mat-label>CEP</mat-label>
+  <input cepInput matInput [(ngModel)]="cep" mask="00000-000" (keyup)="onCepChange($event)" placeholder="CEP" />
+  <mat-error *ngIf="!cep.length">
+    Campo obrigatório
+  </mat-error>
+  <mat-error *ngIf="cep.length != 9">
+    CEP inválido
+  </mat-error>
+</mat-form-field>

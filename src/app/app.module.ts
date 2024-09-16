@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
   HttpClientModule,
   HTTP_INTERCEPTORS,
   HttpClient,
 } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { AppRoutingModule } from './app-routing.module';
 
 import { DummyInterceptor } from './interceptors/dummy.interceptor';
@@ -55,6 +54,7 @@ import { DetailsComponent } from './components/details/details.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { TitleComponent } from './components/title/title.component';
 import { CustomMatPaginatorIntl } from './components/custom-paginator-intl/custom-paginator-intl.component';
+import { CepComponent } from './components/cep/cep.component';
 
 @NgModule({
   declarations: [
@@ -63,10 +63,12 @@ import { CustomMatPaginatorIntl } from './components/custom-paginator-intl/custo
     DetailsComponent,
     TopNavComponent,
     TitleComponent,
+    CepComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,

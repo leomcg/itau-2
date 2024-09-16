@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, Subject, throwError } from 'rxjs';
-import BranchDetails from '../models/branch-details.model';
+import { BranchDetails } from '../models/branch-details.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
