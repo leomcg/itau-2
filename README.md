@@ -42,6 +42,7 @@ This project includes the following functionalities:
 - **RxJS**: Leveraged RxJS operators, subjects, and observables to showcase knowledge of the library and handle asynchronous operations and data flow effectively.
 - **Routing**: Implemented routing to navigate between different components and used query parameters to pass data around components.
 - **Sass and Sass Variables**: Used Sass for styling and Sass variables to maintain consistent design and easily manage styles across the application.
+- **REMs**: Used REMs instead of pixels for better scalability and responsiviness.
 - **Custom Types (Models)**: Used custom types (models) to catch errors before runtime and ensure type safety.
 - **Code Organization and Best Practices**: Ensured best practices and code organization by avoiding code repetition, using services for helper functions, and maintaining a clean and modular codebase.
 - **Semantic Commits**: Semantic Commit Messages are used to make it easier to understand the purpose of changes and automate versioning.
